@@ -13,28 +13,44 @@ import 'dart:math';
 
 void main() {
   // 1. Create a List<String> of student names: ["Alice", "Bob", "Charlie", "Diana", "Eve"]
-  // TODO: Create the student names list
-  List<String> studentNames = [];
+  List<String> studentNames = ["Alice", "Bob", "Charlie", "Diana", "Eve"];
 
   // 2. Create a Map<String, int> to store student scores
-  // TODO: Create the scores map
   Map<String, int> studentScores = {};
 
   // 3. Use a for loop to assign random scores (60-100) to each student
-  // TODO: Implement the for loop to assign random scores
+  Random random = Random();
+  for (String student in studentNames) {
+    // Generates a random score between 60 and 100 inclusive
+    studentScores[student] = 60 + random.nextInt(41);
+  }
 
   // 4. Find and display:
   //    - The student with the highest score
   //    - The student with the lowest score
   //    - The average score of all students
-  // TODO: Implement the logic to find highest, lowest, and average scores
   String highestStudent = "";
-  int highestScore = 0;
+  int highestScore = -1;
   String lowestStudent = "";
-  int lowestScore = 100;
-  double averageScore = 0.0;
+  int lowestScore = 101;
+  double totalScore = 0.0;
 
-  // TODO: Add your logic here
+  for (String student in studentNames) {
+    int score = studentScores[student]!;
+    totalScore += score;
+
+    if (score > highestScore) {
+      highestScore = score;
+      highestStudent = student;
+    }
+
+    if (score < lowestScore) {
+      lowestScore = score;
+      lowestStudent = student;
+    }
+  }
+
+  double averageScore = totalScore / studentNames.length;
 
   print("Student Scores: $studentScores");
   print("Highest Score: $highestStudent with $highestScore");
@@ -46,12 +62,26 @@ void main() {
   //    - 80-89: "Good"
   //    - 70-79: "Average"
   //    - Below 70: "Needs Improvement"
-  // TODO: Implement the switch statement for each student
   for (String student in studentNames) {
     int score = studentScores[student] ?? 0;
     String category = "";
 
-    // TODO: Add your switch statement here
+    // Switch statement based on score ranges (using score ~/ 10 to group ranges)
+    switch (score ~/ 10) {
+      case 10:
+      case 9:
+        category = "Excellent";
+        break;
+      case 8:
+        category = "Good";
+        break;
+      case 7:
+        category = "Average";
+        break;
+      default:
+        category = "Needs Improvement";
+        break;
+    }
 
     print("$student: $score ($category)");
   }
